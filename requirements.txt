@@ -1,3 +1,16 @@
 fastapi
 uvicorn[standard]
+pytest
+pytest-mock
+httpx
 sqlalchemy
+databases[asyncpg]
+python-dotenv
+pydantic-settings
+psycopg2-binary
+rich
+asgi-correlation-id
+python-json-logger
+python-jose
+python-multipart
+passlib[bcrypt]
