@@ -34,6 +34,7 @@ from app.database import database
 from app.logging_conf import configure_logging
 from app.routers.student import router as student_router
 from app.routers.province import router as province_router
+from fastapi.middleware.cors import CORSMiddleware
 
 
 logger = logging.getLogger(__name__)
@@ -50,9 +51,17 @@ async def lifespan(app: FastAPI):
 app = FastAPI(lifespan=lifespan)
 app.add_middleware(CorrelationIdMiddleware)
 
-app.include_router(student_router)
-app.include_router(province_router)
+app.include_router(student_router, prefix='/api')
+app.include_router(province_router, prefix='/api')
 
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.exception_handler(HTTPException)
 async def http_exception_handle_logging(request, exc):

@@ -16,10 +16,10 @@ router = APIRouter()
 logger = logging.getLogger(__name__)
 
 
-@router.get("/province/list", response_model=list[Province])
+@router.get("/province/list")
 async def list():
     logger.info("Getting all posts")
     query = province_table.select()
     logger.debug(query)
-    provinces = await database.fetch_all(query)
+    provinces = [{'provinceId': province['id'], 'provinceName': province['name']} for province in await database.fetch_all(query)]
     return provinces
