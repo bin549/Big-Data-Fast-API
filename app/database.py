@@ -112,6 +112,16 @@ teacher_evaluation_table = sqlalchemy.Table(
 )
 
 
+subject_table = sqlalchemy.Table(
+    "t_subject",
+    metadata,
+    sqlalchemy.Column("id", sqlalchemy.Integer, primary_key=True, autoincrement=True),
+    sqlalchemy.Column("name", sqlalchemy.String),
+    sqlalchemy.Column("weights", sqlalchemy.Integer),
+    sqlalchemy.Column("school_id", sqlalchemy.ForeignKey("t_school.id"), nullable=False)
+)
+
+
 
 engine = sqlalchemy.create_engine(
     config.DATABASE_URL
