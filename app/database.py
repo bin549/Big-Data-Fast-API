@@ -55,15 +55,6 @@ grade_table = sqlalchemy.Table(
     sqlalchemy.Column("name", sqlalchemy.String),
 )
 
-
-student_evaluation_table = sqlalchemy.Table(
-    "t_student_evaluation",
-    metadata,
-    sqlalchemy.Column("id", sqlalchemy.String, primary_key=True),
-    sqlalchemy.Column("name", sqlalchemy.String)
-)
-
-
 classes_table = sqlalchemy.Table(
     "t_classes",
     metadata,
@@ -78,18 +69,43 @@ teacher_table = sqlalchemy.Table(
     "t_teacher",
     metadata,
     sqlalchemy.Column("id", sqlalchemy.String, primary_key=True),
-    sqlalchemy.Column("name", sqlalchemy.String)
+    sqlalchemy.Column("name", sqlalchemy.String),
+    sqlalchemy.Column("school_id", sqlalchemy.ForeignKey("t_school.id"), nullable=False)
 )
 
-teacher_evaluation_table = sqlalchemy.Table(
-    "t_teacher_evaluation",
+semester_table = sqlalchemy.Table(
+    "t_semester",
     metadata,
     sqlalchemy.Column("id", sqlalchemy.String, primary_key=True),
     sqlalchemy.Column("name", sqlalchemy.String)
 )
 
-semester_table = sqlalchemy.Table(
-    "t_semester",
+
+t_student_evaluation = sqlalchemy.Table(
+    "t_student_evaluation",
+    metadata,
+    sqlalchemy.Column("id", sqlalchemy.String, primary_key=True),
+    sqlalchemy.Column("content", sqlalchemy.String),
+    sqlalchemy.Column("subject", sqlalchemy.String),
+    sqlalchemy.Column("week", sqlalchemy.Integer),
+    sqlalchemy.Column("student_id", sqlalchemy.ForeignKey("t_student.id"), nullable=False),
+    sqlalchemy.Column("teacher_id", sqlalchemy.ForeignKey("t_teacher.id"), nullable=False)
+)
+
+
+student_evaluation_table_2021_2022_1 = sqlalchemy.Table(
+    "t_student_evaluation_2021_2022_1",
+    metadata,
+    sqlalchemy.Column("id", sqlalchemy.String, primary_key=True),
+    sqlalchemy.Column("content", sqlalchemy.String),
+    sqlalchemy.Column("subject", sqlalchemy.String),
+    sqlalchemy.Column("week", sqlalchemy.Integer),
+    sqlalchemy.Column("student_id", sqlalchemy.String),
+    sqlalchemy.Column("teacher_id", sqlalchemy.String)
+)
+
+teacher_evaluation_table = sqlalchemy.Table(
+    "t_teacher_evaluation",
     metadata,
     sqlalchemy.Column("id", sqlalchemy.String, primary_key=True),
     sqlalchemy.Column("name", sqlalchemy.String)

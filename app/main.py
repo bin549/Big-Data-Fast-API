@@ -1,30 +1,3 @@
-# api: getAreaList(provinceId) -> areaCode, cityName,
-#      getProvinceList() -> provinceId, provinceName
-#      getSchoolList(selectedCityId) -> schoolId, schoolName,
-#      getSubjectList(schoolId) -> id, subject
-#      getTermList() -> termId, name
-
-# api: getClassList(selectedSchoolId, gradeId) -> classId, className
-#      getStudentList(selectedClassId.value) -> studentId, name
-
-# api: getTeacherList(school_id)
-
-"""statistic: student"""
-# api:
-# statistic:
-#   api1 -> 评价总数, 平均每学期收到评价数, 正面评价, 负面评价, 收到最多的评价前三, 班级平均数
-#   api2 -> 评语统计柱状图
-
-
-"""statistic: teacher"""
-# api:
-# statistic:
-#   api1 -> 评价总数, 平均每学期收到评价数, 正面评价, 负面评价, 收到最多的评价前三, 班级平均数
-#   api2 -> 评语统计柱状图
-# count:
-#   api1 -> teacher
-#   api2 -> 评语统计柱状图
-
 import logging
 from contextlib import asynccontextmanager
 from asgi_correlation_id import CorrelationIdMiddleware
@@ -35,6 +8,7 @@ from app.logging_conf import configure_logging
 from app.routers.area import router as area_router
 from app.routers.entity import router as entity_router
 from app.routers.timezone import router as timezone_router
+from app.routers.analysis import router as analysis_router
 from fastapi.middleware.cors import CORSMiddleware
 
 
@@ -53,8 +27,9 @@ app = FastAPI(lifespan=lifespan)
 app.add_middleware(CorrelationIdMiddleware)
 
 app.include_router(area_router, prefix='/api')
-app.include_router(entity_router, prefix='/api')
 app.include_router(timezone_router, prefix='/api')
+app.include_router(entity_router, prefix='/api')
+app.include_router(analysis_router, prefix='/api')
 
 
 app.add_middleware(

@@ -19,6 +19,7 @@ from app.database import (
     grade_table,
     classes_table,
     student_table,
+    teacher_table,
 )
 
 router = APIRouter()
@@ -59,5 +60,13 @@ async def list(class_id: str):
     logger.debug(query)
     students = await database.fetch_all(query)
     return students
+
+@router.get("/teacher/list")
+async def list(school_id: int):
+    logger.info("Getting all students")
+    query = teacher_table.select(teacher_table.c.school_id == school_id)
+    logger.debug(query)
+    teachers = await database.fetch_all(query)
+    return teachers
 
 
