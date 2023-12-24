@@ -32,8 +32,9 @@ from fastapi import FastAPI, HTTPException
 from fastapi.exception_handlers import http_exception_handler
 from app.database import database
 from app.logging_conf import configure_logging
-from app.routers.student import router as student_router
-from app.routers.province import router as province_router
+from app.routers.area import router as area_router
+from app.routers.entity import router as entity_router
+from app.routers.timezone import router as timezone_router
 from fastapi.middleware.cors import CORSMiddleware
 
 
@@ -51,8 +52,9 @@ async def lifespan(app: FastAPI):
 app = FastAPI(lifespan=lifespan)
 app.add_middleware(CorrelationIdMiddleware)
 
-app.include_router(student_router, prefix='/api')
-app.include_router(province_router, prefix='/api')
+app.include_router(area_router, prefix='/api')
+app.include_router(entity_router, prefix='/api')
+app.include_router(timezone_router, prefix='/api')
 
 
 app.add_middleware(
