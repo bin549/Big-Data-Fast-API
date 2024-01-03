@@ -25,12 +25,6 @@ async def list_semester():
     logger.info("Getting all semesters")
     query = semester_table.select()
     logger.debug(query)
-    # 1 -> 13,14
-    # 2 -> 11,12
-    # 3 -> 9,10
-    # 4 -> 7,8
-    # 5 -> 5,6
-    # 6 -> 3,4
     semesters = [{'termId': semester['id'], 'name': semester['name']} for semester in await database.fetch_all(query)]
     return semesters
 
