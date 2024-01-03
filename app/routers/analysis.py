@@ -39,18 +39,25 @@ from app.models.dto import (
 )
 from app.database import (
     database,
-    student_evaluation_table_2021_2022_1,
+    student_evaluation_table,
 
 )
+from sqlalchemy import and_
+
 router = APIRouter()
 
 logger = logging.getLogger(__name__)
 
 
 @router.get("/student_evaluation/list")
-async def list_student_evaluation():
+async def list_student_evaluation(student_id: str, term_id: str):
     logger.info("Getting all posts")
-    query = student_evaluation_table_2021_2022_1.select()
+    query = student_evaluation_table.select(
+        and_(
+            student_evaluation_table.c.student_id == student_id,
+            student_evaluation_table.c.term_id == term_id,
+        )
+    )
     logger.debug(query)
     student_evaluations = await database.fetch_all(query)
     return student_evaluations

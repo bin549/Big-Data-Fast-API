@@ -1,4 +1,13 @@
-INSERT INTO t_city (province_id,name) VALUES
+INSERT INTO t_city (id,"name",province_id) VALUES
+	 (246,'珠海',44),
+	 (259,'东莞',44),
+	 (248,'佛山',44),
+	 (249,'江门',44);
+
+
+
+
+ INSERT INTO t_city (province_id,name) VALUES
 	 (11,'东城'),
 	 (11,'西城'),
 	 (11,'朝阳'),

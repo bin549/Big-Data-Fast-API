@@ -1,4 +1,8 @@
 INSERT INTO t_province (id,name) VALUES
+	 (44,'广东');
+
+
+INSERT INTO t_province (id,name) VALUES
 	 (11,'北京'),
 	 (12,'天津'),
 	 (13,'河北'),
@@ -18,7 +22,6 @@ INSERT INTO t_province (id,name) VALUES
 	 (41,'河南'),
 	 (42,'湖北'),
 	 (43,'湖南'),
-	 (44,'广东'),
 	 (45,'广西');
 INSERT INTO t_province (id,name) VALUES
 	 (46,'海南'),

@@ -73,6 +73,14 @@ teacher_table = sqlalchemy.Table(
     sqlalchemy.Column("school_id", sqlalchemy.ForeignKey("t_school.id"), nullable=False)
 )
 
+teacher_table = sqlalchemy.Table(
+    "t_teach",
+    metadata,
+    sqlalchemy.Column("id", sqlalchemy.Integer, primary_key=True, autoincrement=True),
+    sqlalchemy.Column("teacher_id", sqlalchemy.ForeignKey("t_teacher.id"), nullable=False),
+    sqlalchemy.Column("class_id", sqlalchemy.ForeignKey("t_classes.id"), nullable=False)
+)
+
 semester_table = sqlalchemy.Table(
     "t_semester",
     metadata,
@@ -80,29 +88,19 @@ semester_table = sqlalchemy.Table(
     sqlalchemy.Column("name", sqlalchemy.String)
 )
 
-
-t_student_evaluation = sqlalchemy.Table(
+student_evaluation_table = sqlalchemy.Table(
     "t_student_evaluation",
     metadata,
-    sqlalchemy.Column("id", sqlalchemy.String, primary_key=True),
+    sqlalchemy.Column("id", sqlalchemy.Integer, primary_key=True, autoincrement=True),
     sqlalchemy.Column("content", sqlalchemy.String),
+    sqlalchemy.Column("score", sqlalchemy.Integer),
     sqlalchemy.Column("subject", sqlalchemy.String),
     sqlalchemy.Column("week", sqlalchemy.Integer),
     sqlalchemy.Column("student_id", sqlalchemy.ForeignKey("t_student.id"), nullable=False),
-    sqlalchemy.Column("teacher_id", sqlalchemy.ForeignKey("t_teacher.id"), nullable=False)
+    sqlalchemy.Column("teacher_id", sqlalchemy.ForeignKey("t_teacher.id"), nullable=False),
+    sqlalchemy.Column("term_id", sqlalchemy.ForeignKey("t_semester.id"), nullable=False)
 )
 
-
-student_evaluation_table_2021_2022_1 = sqlalchemy.Table(
-    "t_student_evaluation_2021_2022_1",
-    metadata,
-    sqlalchemy.Column("id", sqlalchemy.String, primary_key=True),
-    sqlalchemy.Column("content", sqlalchemy.String),
-    sqlalchemy.Column("subject", sqlalchemy.String),
-    sqlalchemy.Column("week", sqlalchemy.Integer),
-    sqlalchemy.Column("student_id", sqlalchemy.String),
-    sqlalchemy.Column("teacher_id", sqlalchemy.String)
-)
 
 teacher_evaluation_table = sqlalchemy.Table(
     "t_teacher_evaluation",
