@@ -1,4 +1,9 @@
 import sqlalchemy
+from sqlalchemy import (
+    desc,
+    cast,
+    Integer
+)
 from fastapi import APIRouter
 import logging
 
@@ -23,7 +28,7 @@ logger = logging.getLogger(__name__)
 @router.get("/semester/list")
 async def list_semester():
     logger.info("Getting all semesters")
-    query = semester_table.select()
+    query = semester_table.select().order_by(desc(cast(semester_table.c.id, Integer)))
     logger.debug(query)
     semesters = [{'termId': semester['id'], 'name': semester['name']} for semester in await database.fetch_all(query)]
     return semesters
