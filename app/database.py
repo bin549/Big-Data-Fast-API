@@ -73,7 +73,7 @@ teacher_table = sqlalchemy.Table(
     sqlalchemy.Column("school_id", sqlalchemy.ForeignKey("t_school.id"), nullable=False)
 )
 
-teacher_table = sqlalchemy.Table(
+teach_table = sqlalchemy.Table(
     "t_teach",
     metadata,
     sqlalchemy.Column("id", sqlalchemy.Integer, primary_key=True, autoincrement=True),

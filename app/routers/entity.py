@@ -81,10 +81,9 @@ async def list(class_id: str):
 
 @router.get("/teacher/list")
 async def list(school_id: int):
-    logger.info("Getting all students")
+    logger.info("Getting all teachers")
+    print(school_id)
     query = teacher_table.select(teacher_table.c.school_id == school_id)
     logger.debug(query)
-    teachers = await database.fetch_all(query)
+    teachers = [{'teacherId': teacher['id'], 'teacherName': teacher['name']} for teacher in await database.fetch_all(query)]
     return teachers
-
-
