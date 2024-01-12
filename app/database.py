@@ -88,19 +88,6 @@ semester_table = sqlalchemy.Table(
     sqlalchemy.Column("name", sqlalchemy.String)
 )
 
-student_evaluation_table = sqlalchemy.Table(
-    "t_student_evaluation",
-    metadata,
-    sqlalchemy.Column("id", sqlalchemy.Integer, primary_key=True, autoincrement=True),
-    sqlalchemy.Column("content", sqlalchemy.String),
-    sqlalchemy.Column("score", sqlalchemy.Integer),
-    sqlalchemy.Column("subject", sqlalchemy.String),
-    sqlalchemy.Column("week", sqlalchemy.Integer),
-    sqlalchemy.Column("student_id", sqlalchemy.ForeignKey("t_student.id"), nullable=False),
-    sqlalchemy.Column("teacher_id", sqlalchemy.ForeignKey("t_teacher.id"), nullable=False),
-    sqlalchemy.Column("term_id", sqlalchemy.ForeignKey("t_semester.id"), nullable=False)
-)
-
 
 teacher_evaluation_table = sqlalchemy.Table(
     "t_teacher_evaluation",
@@ -110,16 +97,36 @@ teacher_evaluation_table = sqlalchemy.Table(
 )
 
 
+coin_table = sqlalchemy.Table(
+    "t_coin",
+    metadata,
+    sqlalchemy.Column("id", sqlalchemy.Integer, primary_key=True, autoincrement=True),
+    sqlalchemy.Column("name", sqlalchemy.String),
+    sqlalchemy.Column("currency_id", sqlalchemy.Integer),
+    sqlalchemy.Column("school_id", sqlalchemy.ForeignKey("t_school.id"), nullable=False)
+)
+
 subject_table = sqlalchemy.Table(
     "t_subject",
     metadata,
     sqlalchemy.Column("id", sqlalchemy.Integer, primary_key=True, autoincrement=True),
     sqlalchemy.Column("name", sqlalchemy.String),
-    sqlalchemy.Column("weights", sqlalchemy.Integer),
+    sqlalchemy.Column("coin_id", sqlalchemy.ForeignKey("t_coin.id"), nullable=False),
     sqlalchemy.Column("school_id", sqlalchemy.ForeignKey("t_school.id"), nullable=False)
 )
 
-
+student_evaluation_table = sqlalchemy.Table(
+    "t_student_evaluation",
+    metadata,
+    sqlalchemy.Column("id", sqlalchemy.Integer, primary_key=True, autoincrement=True),
+    sqlalchemy.Column("content", sqlalchemy.String),
+    sqlalchemy.Column("score", sqlalchemy.Integer),
+    sqlalchemy.Column("week", sqlalchemy.Integer),
+    sqlalchemy.Column("student_id", sqlalchemy.ForeignKey("t_student.id"), nullable=False),
+    sqlalchemy.Column("teacher_id", sqlalchemy.ForeignKey("t_teacher.id"), nullable=False),
+    sqlalchemy.Column("term_id", sqlalchemy.ForeignKey("t_semester.id"), nullable=False),
+    sqlalchemy.Column("subject_id", sqlalchemy.ForeignKey("t_subject.id"), nullable=False)
+)
 
 engine = sqlalchemy.create_engine(
     config.DATABASE_URL

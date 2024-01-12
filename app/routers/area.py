@@ -30,6 +30,7 @@ async def list_provinces():
     provinces = [{'provinceId': province['id'], 'provinceName': province['name']} for province in await database.fetch_all(query)]
     return provinces
 
+
 @router.get("/city/list")
 async def list_cities(province_id: int):
     logger.info("Getting all citys")

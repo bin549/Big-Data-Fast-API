@@ -12,6 +12,7 @@ where
     tc.gradeId in (2,3,4,5,6)
     and tc.schoolId =4404001
 
+select currencyId, name, schoolId  from t_coin where schoolId =4404001
 
 
 
@@ -24,6 +25,11 @@ where
     and schoolId =4404001
 
 
+select ts.subject as name, tet.type, ts.schoolId from t_evaluation_template tet 
+	left join t_subject ts 
+	on tet.subject =ts.subject 
+	where ts.schoolId =4404001
+	group by ts.subject 
 
 
 select
@@ -35,7 +41,7 @@ from t_teacher_evaluation_2022_2023_2 tte
 where
     tc.gradeId in (2,3,4,5,6)
     and tc.schoolId =4404001
-    and tte.teacherId != '8a7dbfa2-f43a-4e54-b0c2-333e4e90f5e6'
+    and tte.teacherId not in ('8a7dbfa2-f43a-4e54-b0c2-333e4e90f5e6','15ade7a8-eef0-4049-af74-8f4769d896ee')
 
 
 

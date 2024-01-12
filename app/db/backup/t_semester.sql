@@ -12,8 +12,3 @@ INSERT INTO t_semester (id,name) VALUES
 	 (13,'2022-2023学年度第一学期'),
 	 (14,'2022-2023学年度第二学期')
 
-
-
-INSERT INTO t_semester (id,name) VALUES
-	 (1,'2016-2017学年度第一学期'),
-	 (2,'2016-2017学年度第二学期'),

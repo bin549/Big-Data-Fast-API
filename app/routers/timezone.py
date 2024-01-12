@@ -18,6 +18,7 @@ from app.database import (
     database,
     semester_table,
     subject_table,
+    coin_table,
 )
 
 router = APIRouter()
@@ -32,6 +33,15 @@ async def list_semester():
     logger.debug(query)
     semesters = [{'termId': semester['id'], 'name': semester['name']} for semester in await database.fetch_all(query)]
     return semesters
+
+
+@router.get("/coin/list")
+async def list_subject(school_id: int):
+    logger.info("Getting all coins")
+    query = coin_table.select(coin_table.c.school_id == school_id)
+    logger.debug(query)
+    coins = [{'id': coin['id'], 'name': coin['name']} for coin in await database.fetch_all(query)]
+    return coins
 
 
 @router.get("/subject/list")
