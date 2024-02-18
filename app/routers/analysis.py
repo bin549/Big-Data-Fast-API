@@ -52,12 +52,13 @@ logger = logging.getLogger(__name__)
 
 
 @router.get("/student_evaluation/list")
-async def list_student_evaluation(student_id: str, term_id: str):
+async def list_student_evaluation(student_id: str, subject_ids: str, term_ids: str):
     logger.info("Getting all posts")
     query = student_evaluation_table.select(
         and_(
             student_evaluation_table.c.student_id == student_id,
-            student_evaluation_table.c.term_id == term_id,
+            student_evaluation_table.c.subject_id.in_([int(subject_ids_str) for subject_ids_str in subject_ids.split(",")]),
+            student_evaluation_table.c.term_id.in_(term_ids.split(",")),
         )
     )
     logger.debug(query)
