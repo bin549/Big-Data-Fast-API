@@ -1,3 +1,5 @@
+
+
 # api: getAreaList(provinceId) -> areaCode, cityName,
 #      getProvinceList() -> provinceId, provinceName
 #      getSchoolList(selectedCityId) -> schoolId, schoolName,
