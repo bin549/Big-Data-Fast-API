@@ -64,3 +64,17 @@ async def list_student_evaluation(student_id: str, subject_ids: str, term_ids: s
     logger.debug(query)
     student_evaluations = await database.fetch_all(query)
     return student_evaluations
+
+
+
+@router.get("/student_evaluation/list_week")
+async def list_student_evaluation_week(student_id: str):
+    logger.info("Getting all posts")
+    query = student_evaluation_table.select(
+        and_(
+            student_evaluation_table.c.student_id == student_id,
+        )
+    )
+    logger.debug(query)
+    student_evaluations = await database.fetch_all(query)
+    return student_evaluations
