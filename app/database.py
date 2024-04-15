@@ -70,6 +70,7 @@ teacher_table = sqlalchemy.Table(
     metadata,
     sqlalchemy.Column("id", sqlalchemy.String, primary_key=True),
     sqlalchemy.Column("name", sqlalchemy.String),
+    sqlalchemy.Column("sex", sqlalchemy.String),
     sqlalchemy.Column("school_id", sqlalchemy.ForeignKey("t_school.id"), nullable=False)
 )
 

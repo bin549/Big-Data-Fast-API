@@ -1,33 +1,3 @@
-
-
-# api: getAreaList(provinceId) -> areaCode, cityName,
-#      getProvinceList() -> provinceId, provinceName
-#      getSchoolList(selectedCityId) -> schoolId, schoolName,
-#      getSubjectList(schoolId) -> id, subject
-#      getTermList() -> termId, name
-
-# api: getClassList(selectedSchoolId, gradeId) -> classId, className
-#      getStudentList(selectedClassId.value) -> studentId, name
-
-# api: getTeacherList(school_id)
-
-"""statistic: student"""
-# api:
-# statistic:
-#   api1 -> 评价总数, 平均每学期收到评价数, 正面评价, 负面评价, 收到最多的评价前三, 班级平均数
-#   api2 -> 评语统计柱状图
-
-
-"""statistic: teacher"""
-# api:
-# statistic:
-#   api1 -> 评价总数, 平均每学期收到评价数, 正面评价, 负面评价, 收到最多的评价前三, 班级平均数
-#   api2 -> 评语统计柱状图
-# count:
-#   api1 -> teacher
-#   api2 -> 评语统计柱状图
-
-
 from fastapi import APIRouter, HTTPException
 import logging
 from app.models.vo import (
@@ -42,6 +12,7 @@ from app.models.dto import (
 from app.database import (
     database,
     student_evaluation_table,
+    student_table,
 
 )
 from sqlalchemy import and_
@@ -57,14 +28,14 @@ async def list_student_evaluation(student_id: str, subject_ids: str, term_ids: s
     query = student_evaluation_table.select(
         and_(
             student_evaluation_table.c.student_id == student_id,
-            student_evaluation_table.c.subject_id.in_([int(subject_ids_str) for subject_ids_str in subject_ids.split(",")]),
+            student_evaluation_table.c.subject_id.in_(
+                [int(subject_ids_str) for subject_ids_str in subject_ids.split(",")]),
             student_evaluation_table.c.term_id.in_(term_ids.split(",")),
         )
     )
     logger.debug(query)
     student_evaluations = await database.fetch_all(query)
     return student_evaluations
-
 
 
 @router.get("/student_evaluation/list_week")
@@ -76,5 +47,19 @@ async def list_student_evaluation_week(student_id: str):
         )
     )
     logger.debug(query)
+    student_evaluations = await database.fetch_all(query)
+    return student_evaluations
+
+
+@router.get("/student_evaluation/list_class")
+async def list_student_evaluation_week(class_id: str, term_id: str):
+    logger.info("Getting list_class")
+    query = student_table.select(student_table.c.class_id == class_id)
+    student_query = await database.fetch_all(query)
+    student_ids = [student.id for student in student_query]
+    query = student_evaluation_table.select(and_(
+        student_evaluation_table.c.student_id.in_(student_ids),
+        student_evaluation_table.c.term_id == term_id
+    ))
     student_evaluations = await database.fetch_all(query)
     return student_evaluations

@@ -36,7 +36,7 @@ async def list_semester():
 
 
 @router.get("/coin/list")
-async def list_subject(school_id: int):
+async def list_coin(school_id: int):
     logger.info("Getting all coins")
     query = coin_table.select(coin_table.c.school_id == school_id)
     logger.debug(query)
@@ -49,5 +49,6 @@ async def list_subject(school_id: int):
     logger.info("Getting all subject")
     query = subject_table.select(subject_table.c.school_id == school_id)
     logger.debug(query)
-    subjects = [{'id': subject['id'], 'subject': subject['name']} for subject in await database.fetch_all(query)]
+    subjects = [{'id': subject['id'], 'subject': subject['name'], 'coin_id': subject['coin_id']} for subject in await database.fetch_all(query)]
     return subjects
+ 
