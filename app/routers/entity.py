@@ -33,7 +33,7 @@ logger = logging.getLogger(__name__)
 @router.get("/school/list")
 async def list_schools(county_id: int):
     logger.info("Getting all schools")
-    query = school_table.select(school_table.c.county_id == county_id)
+    query = school_table.select().where(school_table.c.county_id == county_id)
     logger.debug(query)
     schools = await database.fetch_all(query)
     return schools
@@ -73,7 +73,7 @@ async def list_classes(school_id: int, grade_id: int):
 @router.get("/student/list")
 async def list(class_id: str):
     logger.info("Getting all students")
-    query = student_table.select(student_table.c.class_id == class_id)
+    query = student_table.select().where(student_table.c.class_id == class_id)
     logger.debug(query)
     students = await database.fetch_all(query)
     return students
@@ -82,7 +82,7 @@ async def list(class_id: str):
 @router.get("/teacher/list")
 async def list(school_id: int):
     logger.info("Getting all teachers")
-    query = teacher_table.select(teacher_table.c.school_id == school_id)
+    query = teacher_table.select().where(teacher_table.c.school_id == school_id)
     logger.debug(query)
     teachers = [{'teacherId': teacher['id'], 'teacherName': teacher['name'], 'sex': teacher['sex']} for teacher in await database.fetch_all(query)]
     return teachers

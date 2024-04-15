@@ -34,7 +34,7 @@ async def list_provinces():
 @router.get("/city/list")
 async def list_cities(province_id: int):
     logger.info("Getting all citys")
-    query = city_table.select(city_table.c.province_id == province_id)
+    query = city_table.select().where(city_table.c.province_id == province_id)
     logger.debug(query)
     cities = [{'areaCode': city['id'], 'cityName': city['name']} for city in await database.fetch_all(query)]
     return cities
@@ -43,7 +43,7 @@ async def list_cities(province_id: int):
 @router.get("/county/list")
 async def list_counties(city_id: int):
     logger.info("Getting all counties")
-    query = county_table.select(county_table.c.city_id == city_id)
+    query = county_table.select().where(county_table.c.city_id == city_id)
     logger.debug(query)
     counties = await database.fetch_all(query)
     return counties

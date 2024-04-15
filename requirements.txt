@@ -12,7 +12,7 @@ rich
 asgi-correlation-id
 python-json-logger
 python-jose
-python-multipart
+python-multipart 
 passlib[bcrypt]
 alembic
 python-dotenv
