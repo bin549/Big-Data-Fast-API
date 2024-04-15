@@ -79,7 +79,6 @@ teach_table = sqlalchemy.Table(
     metadata,
     sqlalchemy.Column("id", sqlalchemy.Integer, primary_key=True, autoincrement=True),
     sqlalchemy.Column("teacher_id", sqlalchemy.ForeignKey("t_teacher.id"), nullable=False),
-    sqlalchemy.Column("teacher_id", sqlalchemy.ForeignKey("t_teacher.id"), nullable=False),
     sqlalchemy.Column("class_id", sqlalchemy.ForeignKey("t_classes.id"), nullable=False)
 )
 
