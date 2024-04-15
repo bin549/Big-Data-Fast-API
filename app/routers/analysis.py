@@ -63,3 +63,21 @@ async def list_student_evaluation_week(class_id: str, term_id: str):
     ))
     student_evaluations = await database.fetch_all(query)
     return student_evaluations
+
+
+
+@router.get("/student_evaluation/list_teacher")
+async def list_student_evaluation(teacher_id: str, subject_ids: str, term_ids: str):
+    logger.info("Getting all posts")
+    query = student_evaluation_table.select().where(
+        and_(
+            student_evaluation_table.c.teacher_id == teacher_id,
+            student_evaluation_table.c.subject_id.in_(
+                [int(subject_ids_str) for subject_ids_str in subject_ids.split(",")]),
+            student_evaluation_table.c.term_id.in_(term_ids.split(",")),
+        )
+    )
+    logger.debug(query)
+    student_evaluations = await database.fetch_all(query)
+    return student_evaluations
+
