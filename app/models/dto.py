@@ -33,15 +33,18 @@ class County(CountyIn):
 
     id: int
 
+
 class School(SchoolIn):
     model_config = ConfigDict(from_attributes=True)
 
     id: int
 
+
 class Grade(GradeIn):
     model_config = ConfigDict(from_attributes=True)
 
     id: int
+
 
 class Semester(SemesterIn):
     model_config = ConfigDict(from_attributes=True)

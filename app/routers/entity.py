@@ -84,5 +84,6 @@ async def list(school_id: int):
     logger.info("Getting all teachers")
     query = teacher_table.select().where(teacher_table.c.school_id == school_id)
     logger.debug(query)
-    teachers = [{'teacherId': teacher['id'], 'teacherName': teacher['name'], 'sex': teacher['sex']} for teacher in await database.fetch_all(query)]
+    teachers = [{'teacherId': teacher['id'], 'teacherName': teacher['name'], 'sex': teacher['sex']} for teacher in
+                await database.fetch_all(query)]
     return teachers

@@ -17,6 +17,7 @@ from app.database import (
     city_table,
     county_table,
 )
+
 router = APIRouter()
 
 logger = logging.getLogger(__name__)
@@ -27,7 +28,8 @@ async def list_provinces():
     logger.info("Getting all posts")
     query = province_table.select()
     logger.debug(query)
-    provinces = [{'provinceId': province['id'], 'provinceName': province['name']} for province in await database.fetch_all(query)]
+    provinces = [{'provinceId': province['id'], 'provinceName': province['name']} for province in
+                 await database.fetch_all(query)]
     return provinces
 
 

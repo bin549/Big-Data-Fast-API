@@ -24,5 +24,6 @@ class SchoolIn(BaseModel):
 class GradeIn(BaseModel):
     name: str
 
+
 class SemesterIn(BaseModel):
     name: str

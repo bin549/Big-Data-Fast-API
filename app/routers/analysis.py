@@ -16,7 +16,8 @@ from app.database import (
     teacher_table,
 
 )
-from sqlalchemy import and_
+from sqlalchemy import (
+    and_, func)
 
 router = APIRouter()
 
@@ -87,18 +88,28 @@ async def list_student_evaluation(school_id: int, subject_ids: str, term_ids: st
     logger.info("Getting all posts")
     query = teacher_table.select().where(teacher_table.c.school_id == school_id)
     teacher_query = await database.fetch_all(query)
-    teacher_ids = [teacher.id for teacher in teacher_query]
+    teacher_maps = {teacher.id: teacher.name for teacher in teacher_query}
     query = student_evaluation_table.select().where(
         and_(
-            student_evaluation_table.c.teacher_id.in_(teacher_ids),
             student_evaluation_table.c.subject_id.in_(
                 [int(subject_ids_str) for subject_ids_str in subject_ids.split(",")]),
             student_evaluation_table.c.term_id.in_(term_ids.split(",")),
         )
+    ).group_by(student_evaluation_table.c.teacher_id).with_only_columns(
+        student_evaluation_table.c.teacher_id,
+        func.count().label('count')
     )
-    logger.debug(query)
-    student_evaluations = await database.fetch_all(query)
-    return student_evaluations
-
-
-
+    results = await database.fetch_all(query)
+    xData = []
+    yData = []
+    for row in results:
+        if row['teacher_id'] in teacher_maps.keys():
+            teacher_id = row['teacher_id']
+            count = row['count']
+            xData.append(teacher_maps[teacher_id])
+            yData.append(count)
+    if len(xData) == 0:
+        return []
+    sorted_data = sorted(zip(xData, yData), key=lambda x: x[1], reverse=False)
+    sorted_names, sorted_numbers = zip(*sorted_data)
+    return [sorted_names, sorted_numbers]

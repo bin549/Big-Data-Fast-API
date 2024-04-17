@@ -11,7 +11,6 @@ from app.routers.timezone import router as timezone_router
 from app.routers.analysis import router as analysis_router
 from fastapi.middleware.cors import CORSMiddleware
 
-
 logger = logging.getLogger(__name__)
 
 
@@ -31,7 +30,6 @@ app.include_router(timezone_router, prefix='/api')
 app.include_router(entity_router, prefix='/api')
 app.include_router(analysis_router, prefix='/api')
 
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -39,6 +37,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 @app.exception_handler(HTTPException)
 async def http_exception_handle_logging(request, exc):

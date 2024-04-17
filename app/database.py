@@ -14,14 +14,12 @@ student_table = sqlalchemy.Table(
     sqlalchemy.Column("class_id", sqlalchemy.ForeignKey("t_classes.id"), nullable=False)
 )
 
-
 province_table = sqlalchemy.Table(
     "t_province",
     metadata,
     sqlalchemy.Column("id", sqlalchemy.Integer, primary_key=True, autoincrement=True),
     sqlalchemy.Column("name", sqlalchemy.String)
 )
-
 
 city_table = sqlalchemy.Table(
     "t_city",
@@ -30,7 +28,6 @@ city_table = sqlalchemy.Table(
     sqlalchemy.Column("name", sqlalchemy.String),
     sqlalchemy.Column("province_id", sqlalchemy.ForeignKey("t_province.id"), nullable=False)
 )
-
 
 county_table = sqlalchemy.Table(
     "t_county",
@@ -89,14 +86,12 @@ semester_table = sqlalchemy.Table(
     sqlalchemy.Column("name", sqlalchemy.String)
 )
 
-
 teacher_evaluation_table = sqlalchemy.Table(
     "t_teacher_evaluation",
     metadata,
     sqlalchemy.Column("id", sqlalchemy.String, primary_key=True),
     sqlalchemy.Column("name", sqlalchemy.String)
 )
-
 
 coin_table = sqlalchemy.Table(
     "t_coin",
